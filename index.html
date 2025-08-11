@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 80px 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 0 auto;
+        }
+        
+        /* Главная секция */
+        #home {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover;
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+        }
+        
+        .home-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .home-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .home-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: #ecf0f1;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), #c0392b);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+        }
+        
+        .play-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s;
+        }
+        
+        .play-button:hover:before {
+            left: 100%;
+        }
+        
+        /* Об игре секция */
+        #about {
+            background-color: white;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .about-content p {
+            margin-bottom: 20px;
+        }
+        
+        /* Разработчики секция */
+        #developers {
+            background-color: #f8f9fa;
+        }
+        
+        .developers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .developer-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .developer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .developer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .developer-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .developer-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        
+        /* Обновления секция */
+        #updates {
+            background-color: white;
+        }
+        
+        .updates-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .update-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .update-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        
+        .update-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .update-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .update-date {
+            background-color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .update-content {
+            padding: 25px;
+        }
+        
+        .update-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .update-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .update-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .update-content li:before {
+            content: '•';
+            color: var(--secondary);
+            font-weight: bold;
+            position: absolute;
+            left: -10px;
+        }
+        
+        .update-tag {
+            display: inline-block;
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        /* Чат игроков секция */
+        #chat {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            text-align: center;
+        }
+        
+        .chat-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .chat-placeholder {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 50px;
+            margin-top: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .chat-placeholder i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .chat-placeholder h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .chat-placeholder p {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-icons {
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .home-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .play-button {
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+            
+            .update-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>Игра</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link active">Главная</a></li>
+                    <li><a href="#about" class="nav-link">Об игре</a></li>
+                    <li><a href="#updates" class="nav-link">Обновления</a></li>
+                    <li><a href="#developers" class="nav-link">Разработчики</a></li>
+                    <li><a href="#chat" class="nav-link">Чат игроков</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container home-content">
+            <h2>Добро пожаловать в мир приключений</h2>
+            <p>Погрузитесь в захватывающую игру, которая изменит ваше представление о развлечениях</p>
+            <button class="play-button">
+                <i class="fas fa-play"></i> Играть
+            </button>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Об игре</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="about-content">
+                <p>Добро пожаловать в уникальный игровой мир, где ваше воображение становится единственным пределом. Наша игра предлагает захватывающее приключение в тщательно проработанной вселенной, полной тайн, опасностей и невероятных открытий.</p>
+                
+                <p>Вы исследуете обширные территории, от древних руин до футуристических мегаполисов, взаимодействуя с разнообразными персонажами и раскрывая сложную сюжетную линию. Каждое ваше решение влияет на развитие событий, создавая уникальный игровой опыт.</p>
+                
+                <p>Система боя сочетает в себе стратегическое мышление и молниеносную реакцию, а продвинутая система развития персонажа позволяет создавать уникальные билды, соответствующие вашему стилю игры. Мультиплеерные режимы предлагают возможность соревноваться с друзьями или объединяться для решения сложных задач.</p>
+                
+                <p>Регулярные обновления и события гарантируют, что мир игры постоянно развивается, предлагая новые вызовы и возможности даже самым опытным игрокам. Присоединяйтесь к нашему сообществу и станьте частью легенды!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="updates">
+        <div class="container">
+            <div class="section-title">
+                <h2>Обновления</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="updates-container">
+                <div class="update-item">
+                    <div class="update-header">
+                        <div class="update-title">Версия 2.5: Затерянные королевства</div>
+                        <div class="update-date">15.11.2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Основные изменения:</h3>
+                        <ul>
+                            <li>Добавлен новый игровой континент "Затерянные королевства" с 5 уникальными локациями</li>
+                            <li>Введена новая система погоды, влияющая на игровой процесс</li>
+                            <li>Добавлены 20 новых квестов主线任务</li>
+                            <li>Улучшена графика и оптимизация производительности</li>
+                            <li>Исправлены ошибки предыдущей версии</li>
+                        </ul>
+                        <div>
+                            <span class="update-tag">Новый контент</span>
+                            <span class="update-tag">Графика</span>
+                            <span class="update-tag">Исправления</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-header">
+                        <div class="update-title">Версия 2.4: Арена чемпионов</div>
+                        <div class="update-date">03.10.2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Основные изменения:</h3>
+                        <ul>
+                            <li>Добавлен новый PvP режим "Арена чемпионов" с рейтинговой системой</li>
+                            <li>Введены сезонные события с уникальными наградами</li>
+                            <li>Добавлены 5 новых персонажей для выбора</li>
+                            <li>Переработана система прокачки навыков</li>
+                            <li>Добавлена поддержка геймпадов</li>
+                        </ul>
+                        <div>
+                            <span class="update-tag">PvP</span>
+                            <span class="update-tag">События</span>
+                            <span class="update-tag">Персонажи</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-header">
+                        <div class="update-title">Версия 2.3: Тени прошлого</div>
+                        <div class="update-date">18.09.2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Основные изменения:</h3>
+                        <ul>
+                            <li>Добавлена новая сюжетная линия "Тени прошлого"</li>
+                            <li>Введены новые типы врагов и боссы</li>
+                            <li>Добавлены новые виды оружия и брони</li>
+                            <li>Улучшен ИИ противников</li>
+                            <li>Оптимизирована работа сетевого кода</li>
+                        </ul>
+                        <div>
+                            <span class="update-tag">Сюжет</span>
+                            <span class="update-tag">Оружие</span>
+                            <span class="update-tag">Сеть</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-header">
+                        <div class="update-title">Версия 2.2: Гильдии</div>
+                        <div class="update-date">25.08.2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Основные изменения:</h3>
+                        <ul>
+                            <li>Добавлена система гильдий с возможностью создания и управления</li>
+                            <li>Введены гильдейские войны и совместные задания</li>
+                            <li>Добавлен гильдейский магазин с уникальными товарами</li>
+                            <li>Улучшен интерфейс социальных взаимодействий</li>
+                            <li>Добавлены новые эмблемы и баннеры для гильдий</li>
+                        </ul>
+                        <div>
+                            <span class="update-tag">Гильдии</span>
+                            <span class="update-tag">Социальные</span>
+                            <span class="update-tag">Интерфейс</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="developers">
+        <div class="container">
+            <div class="section-title">
+                <h2>Разработчики</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="developers-grid">
+                <div class="developer-card">
+                    <div class="developer-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Александр Иванов</h3>
+                    <p>Ведущий разработчик и геймдизайнер с 10-летним опытом в игровой индустрии. Ответственен за общую концепцию игры, механики и баланс. Участник создания нескольких успешных инди-проектов. Его страсть к созданию уникальных игровых миров вдохновляет всю команду на достижение новых высот.</p>
+                </div>
+                
+                <div class="developer-card">
+                    <div class="developer-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Мария Петрова</h3>
+                    <p>Художественный руководитель и главный сценарист. Закончила Академию художеств по специальности "Компьютерная графика и анимация". Отвечает за визуальный стиль игры, дизайн персонажей и окружения. Её глубокие знания в области повествования создают захватывающие сюжетные линии, которые держат игроков в напряжении до самого конца.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">Чат игроков</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="chat-content">
+                <div class="chat-placeholder">
+                    <i class="fas fa-comments"></i>
+                    <h3>Пока в разработке</h3>
+                    <p>Мы работаем над созданием удобного и функционального чата для нашего игрового сообщества. Скоро здесь появится возможность общения с другими игроками, обмена опытом и поиска команды для совместной игры!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>Игровой портал</h1>
+            </div>
+            <p>Создано с любовью к игрокам</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Игровой портал. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем все ссылки навигации
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Добавляем обработчик клика для каждой ссылки
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // Отменяем стандартное поведение
+                    
+                    // Убираем активный класс у всех ссылок
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Добавляем активный класс к текущей ссылке
+                    this.classList.add('active');
+                    
+                    // Получаем ID секции из href
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Вычисляем позицию секции с учетом высоты фиксированной шапки
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const sectionPosition = targetSection.offsetTop - headerHeight;
+                        
+                        // Плавная прокрутка к секции
+                        window.scrollTo({
+                            top: sectionPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Добавляем подсветку активной секции при прокрутке
+            const sections = document.querySelectorAll('section[id]');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${current}`) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
